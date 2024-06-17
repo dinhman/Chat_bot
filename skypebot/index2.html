@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VID_BOT Control Panel</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff; /* Màu xanh dương đậm */
+            margin-bottom: 20px;
+        }
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .button-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button-container button:hover {
+            background-color: #0056b3;
+        }
+        #status {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>VID_BOT Control Panel</h1>
+        <div class="button-container">
+            <button onclick="startProcess()">Start</button>
+            <button onclick="stopProcess()">Stop</button>
+            <button onclick="restartProcess()">Restart</button>
+        </div>
+        <a href="/logout">Logout</a>
+
+        <!-- Container for displaying process status -->
+        <div id="status"></div>
+    </div>
+
+    <script type="text/javascript">
+        var socket = io();
+
+        socket.on('connect', function() {
+            console.log('Connected to server');
+        });
+
+        socket.on('process_status', function(data) {
+            // Display process status in the status div
+            $('#status').text('Status: ' + data);
+            
+            // Optionally, alert the user with the status message
+            alert(data);
+        });
+
+        function startProcess() {
+            socket.emit('start_process');
+
+            // Example countdown logic (optional)
+            var count = 10;
+            var countdownInterval = setInterval(function() {
+                $('#status').text('Starting VID_BOT in ' + count + ' seconds...');
+                count--;
+                if (count < 0) {
+                    clearInterval(countdownInterval);
+                    $('#status').text('VID_BOT is running');
+                }
+            }, 1000);
+
+            // After countdown, request current process status
+            setTimeout(function() {
+                socket.emit('get_process_status');
+            }, 10000); // Wait 10 seconds (same as countdown) before checking status
+        }
+
+        function stopProcess() {
+            socket.emit('stop_process');
+        }
+
+        function restartProcess() {
+            socket.emit('restart_process');
+
+            // Example countdown logic for restart (optional)
+            var count = 10;
+            var countdownInterval = setInterval(function() {
+                $('#status').text('Restarting VID_BOT in ' + count + ' seconds...');
+                count--;
+                if (count < 0) {
+                    clearInterval(countdownInterval);
+                    $('#status').text('VID_BOT is running');
+                }
+            }, 1000);
+
+            // After countdown, request current process status
+            setTimeout(function() {
+                socket.emit('get_process_status');
+            }, 10000); // Wait 10 seconds (same as countdown) before checking status
+        }
+
+    </script>
+</body>
+</html>

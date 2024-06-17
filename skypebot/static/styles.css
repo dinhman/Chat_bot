@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 20px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: relative; /* Để có thể sử dụng position: absolute; cho phần logout */
+}
+h1 {
+    text-align: center;
+    color: #007bff; /* Màu xanh dương đậm */
+    margin-bottom: 20px;
+}
+.button-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.button-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.button-container button:hover {
+    background-color: #0056b3;
+}
+#status {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+}
+a.logout {
+    position: absolute;
+    top: 20px; /* Khoảng cách từ top */
+    right: 20px; /* Khoảng cách từ right */
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+a.logout:hover {
+    text-decoration: underline;
+}

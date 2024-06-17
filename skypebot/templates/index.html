@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VID_BOT Control Panel</title>
+    <script src="http://localhost:5500/api/socket.io.js"></script>
+    <script src="http://localhost:5500/api/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>VID_BOT Control Panel</h1>
+        <div class="button-container">
+            <button onclick="startProcess()">Start</button>
+            <button onclick="stopProcess()">Stop</button>
+            <button onclick="restartProcess()">Restart</button>
+        </div>
+        <a href="/logout" class="logout">Logout</a>
+
+        <!-- Container for displaying process status -->
+        <div id="status"></div>
+    </div>
+</body>
+</html>
